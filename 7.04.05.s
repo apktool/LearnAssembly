@@ -1,3 +1,5 @@
+# Interger Arithmetic | mull
+
 .section .data
 	data1: .int 315814
 	data2: .int 165432
