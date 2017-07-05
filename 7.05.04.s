@@ -1,42 +1,56 @@
-# String | Moving a string byte by byte
+# String | MOVSB
+# Moving a string byte by byte
 
 .section .data
-	value1:
-		.ascii "This is a test string.\n"
-	value2:
-		.ascii "Oops\n"
+	value:
+		.asciz "hello world\n"
+
 .section .bss
-	.lcomm output, 23
+	.lcomm output1, 13
+	.lcomm output2, 13
+
 .section .text
-	.globl _start
+	.global _start
 
 _start:
-	leal value1, %esi
-	leal output, %edi
-	movl $23, %ecx
+	nop
+	leal value+12, %esi
+	leal output1+12, %edi
+
+	movl $13, %ecx
+	std
+	rep movsb
+
+	pushl $output1
+	call printf
+
+	# ----------------------
+
+	nop
+	movl $value, %esi     ;等价于上述的leal
+	movl $output2, %edi
+
+	movl $13, %ecx
 	cld
 	rep movsb
 
-	leal value2, %esi
-	leal output, %edi
-	movl $6, %ecx
-	cld
-	rep movsl
-	# dubug
-	# gdb -q a.out
-	# x/s &output
+	pushl $output2
+	call printf
 
-	movl $1, %eax
+	# ----------------------
+
 	movl $0, %ebx
+	movl $1, %eax
 	int $0x80
 
 /*
 # debug
-   print $output  ; $1 = void
-   print output   ; $2 = 1936748367
-   print &output  ; $3 = (<data variable, no debug info> *) 0x600108 <output>
+   print $value   ; $1 = void
+   print value    ; $2 = 1819043176
+   print &value   ; $3 = (<data variable, no debug info> *) 0x804928c
 
-   x $output      ; Value can't be converted to integer.
-   x output       ; 0x73706f4f:     <error: Cannot access memory at address 0x73706f4f>
-   x &output      ; 0x600108 <output>:      "This is a test string.\n"
+   x $value       ; Value can't be converted to integer.
+   x value        ; 0x6c6c6568:     Cannot access memory at address 0x6c6c6568
+   x &value       ; 0x804928c:      0x6c6c6568
+   x/s &value     ; 0x804928c:      "hello world\n"
 */
