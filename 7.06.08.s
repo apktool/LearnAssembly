@@ -51,9 +51,9 @@ area:
           | Function parameter 1 | 8(%ebp)
           | Return Address       | 4(%ebp)
    ESP->  | Old EBP Value        | (%ebp)
-		  | :Local Variable 1    | –4(%ebp)
-		  | Local Variable 2     | –8(%ebp)
-		  | Local Variable 3     | –12(%ebp)
+          | :Local Variable 1    | –4(%ebp)
+          | Local Variable 2     | –8(%ebp)
+          | Local Variable 3     | –12(%ebp)
            ----------------------
 
 While in the function, it is possible that part of the function process will include pushing data onto
