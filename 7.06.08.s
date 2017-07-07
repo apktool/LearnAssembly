@@ -85,4 +85,10 @@ value in the ESP register that was stored in the EBP register, and restore the o
 Resetting the ESP register value ensures that any data placed on the stack within the function but not
 cleaned off will be discarded when execution returns to the main program (otherwise, the RET instruc-
 tion could return to the wrong memory location).
+
+---------------------------------
+
+The ENTER and LEAVE instructions are specifically designed for setting up function prologues (the ENTER
+instruction) and epilogues (the LEAVE instruction). These can be used instead of creating the prologues
+by hand.
 */
